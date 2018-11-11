@@ -26,8 +26,8 @@ class game:
         self.platforms = pygame.sprite.Group()
         self.player = Player(self)
         self.all_sprites.add(self.player)
-        for platform in plats:
-            p = Platform(*platform)
+        for i in range(len(plats)):
+            p = Platform(i,*plats[i])
             self.all_sprites.add(p)
             self.platforms.add(p)
 
@@ -39,12 +39,12 @@ class game:
         #if pygame.sprite.collide_rect(
         collision = pygame.sprite.spritecollideany(self.player, self.platforms , False)
         if collision:
+##            if collision.rect.top >= self.player.rect.bottom:
             self.player.pos.y = collision.rect.top + 1
             self.player.vel.y = 0
-
 #drawing objects onto the screen
     def draw(self):
-        self.display.fill(white)
+        self.display.fill(black)
         self.all_sprites.draw(self.display)
         pygame.display.update()
 
