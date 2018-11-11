@@ -6,8 +6,6 @@ acceleration = 0.5
 friction = -0.12
 gravity = 0.6
 jump_vel = 12
-font = 'calibri'
-fontsize = 50
 #locations of platforms(x-co-ordinate,y-co-ordinate,width,height)
 plats = [(0,display_height-20,display_width,20),
      (0,display_height-110,display_width-80,20),
