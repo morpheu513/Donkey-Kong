@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
             if self.image_index<fps//2:
                 self.image = temp[self.image_index//10]
             else:
-                self.image_index = 0            
+                self.image_index = 0
         if keys[pygame.K_RIGHT]:
             temp = self.images
             self.acc.x = acceleration
@@ -76,7 +76,7 @@ class Player(pygame.sprite.Sprite):
                 self.climb('up')
             if keys[pygame.K_DOWN]:
                 self.climb('down')
-                
+
         self.acc.x += self.vel.x * (friction)
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
@@ -84,7 +84,7 @@ class Player(pygame.sprite.Sprite):
             self.pos.x = 22
         elif self.pos.x + 22 > display_width:
             self.pos.x = display_width - 22
-        
+
 
         self.rect.midbottom  = self.pos
 
@@ -96,7 +96,7 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        
+
 #class to create Ladders
 class Ladder(pygame.sprite.Sprite):
     def __init__(self,x,y):
@@ -108,7 +108,7 @@ class Ladder(pygame.sprite.Sprite):
 
 #class to create Donkey
 class Donkey(pygame.sprite.Sprite):
-    def __init__(self,game):        
+    def __init__(self,game):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
         self.image_index = 0
@@ -121,6 +121,7 @@ class Donkey(pygame.sprite.Sprite):
         self.acc = pygame.math.Vector2(0,0)
     def update(self):
         #acc = [-acceleration,+acceleration]
+        #x = random.randint(0,539)
         if self.image == donkey_list[0]:
             self.acc.x = -acceleration
             if self.rect.left < 155.5:
@@ -139,4 +140,3 @@ class Donkey(pygame.sprite.Sprite):
         self.pos += self.vel + 0.5 * self.acc
         self.rect.midbottom  = self.pos
 ##    def throw(self):
-        

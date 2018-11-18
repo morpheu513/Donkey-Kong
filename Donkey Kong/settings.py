@@ -2,12 +2,12 @@
 #basic game settings
 display_width = 639
 display_height = 700
-fps = 80
+fps = 60
 acceleration = 0.5
 friction = -0.12
 gravity = 0.6
 jump_vel = 7
-
+font_name = 'freesansbold.ttf'
 #generallizing path
 ##for roots,dirs,files in os.walk('E:\\'):
 ##    if 'Donkey Kong' in dirs:
@@ -67,3 +67,4 @@ black = (0,0,0)
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
+grey = (155,155,155)

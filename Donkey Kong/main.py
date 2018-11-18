@@ -11,16 +11,17 @@ class game:
         pygame.display.set_caption("Donkey Kong")
         self.clock = pygame.time.Clock()
         self.running = True
+        self.playing = False
 
-    def run(self):
+    '''def run(self):
         self.playing =True
         while self.playing:
             self.clock.tick(fps)
             self.x = random.randint(0,539)
-            print("printing rand value",self.x)
+            #print("printing rand value",self.x)
             self.events()
             self.update()
-            self.draw()
+            self.draw()'''
 
 #making a new player and setting platforms
     def new(self):
@@ -39,7 +40,7 @@ class game:
             self.ladders.add(l)
         self.all_sprites.add(self.player)
         self.all_sprites.add(self.donkey)
-        self.run()
+    #    self.run()
 
 #updating the position of the sprites
     def update(self):
@@ -77,8 +78,32 @@ class game:
 ##            else:
 ##                self.player.acc = vector(0,gravity)
             #self.acc = vector(0, gravity)
+
+
+    def drawtxt(self,text,fsize,color,x,y):
+        font = pygame.font.Font(font_name,fsize)
+        text_surf = font.render(text,True,color)
+        text_rect = text_surf.get_rect()
+        text_rect.center = (x,y)
+        self.display.blit(text_surf,text_rect)
+
+    def wait(self):
+        waiting = True
+        while waiting:
+            self.clock.tick(fps)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    waiting = False
+                    self.running = False
+                if event.type == pygame.KEYDOWN:
+                    waiting = False
+
+
     def show_start_screen(self):
-        pass
+        self.display.fill(black)
+        self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
+        pygame.display.update()
+        self.wait()
     def show_end_screen(self):
         pass
 
@@ -88,6 +113,14 @@ g.show_start_screen()
 #game loop
 while g.running:
     g.new()
+    g.playing =True
+    while g.playing:
+        g.clock.tick(fps)
+        g.x = random.randint(0,539)
+        #print("printing rand value",self.x)
+        g.events()
+        g.update()
+        g.draw()
     g.show_end_screen()
 
 pygame.quit()
