@@ -30,6 +30,7 @@ class game:
         self.ladders = pygame.sprite.Group()
         self.player = Player(self)
         self.donkey = Donkey(self)
+        self.barrel = Barrel(self)
         for i in range(len(plats)):
             p = Platform(i,*plats[i])
             self.all_sprites.add(p)
@@ -40,6 +41,7 @@ class game:
             self.ladders.add(l)
         self.all_sprites.add(self.player)
         self.all_sprites.add(self.donkey)
+        self.all_sprites.add(self.barrel)
     #    self.run()
 
 #updating the position of the sprites
@@ -79,7 +81,10 @@ class game:
 ##                self.player.acc = vector(0,gravity)
             #self.acc = vector(0, gravity)
 
-
+#updating rand_x
+    def update_rand_x(self):
+        self.rand_x = random.randint(0,539)
+    
     def drawtxt(self,text,fsize,color,x,y):
         font = pygame.font.Font(font_name,fsize)
         text_surf = font.render(text,True,color)
@@ -95,27 +100,21 @@ class game:
                 if event.type == pygame.QUIT:
                     waiting = False
                     self.running = False
-
+                if event.type == pygame.KEYDOWN:
+                    waiting = False
             self.display.fill(black)
-            #self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
-            bcg = pygame.image.load(bg)
-            self.display.blit(bcg,(0,0))
-            kong = pygame.image.load(kong_start_screen)
-            self.display.blit(kong,(180,320))
-            self.drawtxt('Press START to begin', 30, white ,320, 560)
+            self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
 
             mouse = pygame.mouse.get_pos()
             mouse_click = pygame.mouse.get_pressed()
-            if (245+button_width) > mouse[0] > 245 and (600+button_height) > mouse[1] > 600:
-                pygame.draw.rect(self.display , black ,(245,600,button_width,button_height))
-                self.drawtxt('START', 35 , grey,320 , 620)
+            if (245+button_width) > mouse[0] > 245 and (550+button_height) > mouse[1] > 550:
+                pygame.draw.rect(self.display , grey ,(245,550,button_width,button_height))
                 if mouse_click[0] == 1:
                     waiting = False
             else:
-                pygame.draw.rect(self.display , black ,(245,600,button_width,button_height))
-                self.drawtxt('START', 35 , white,320 , 620)
+                pygame.draw.rect(self.display , white ,(245,550,button_width,button_height))
 
-
+            self.drawtxt('START', 20 , black,320 , 570)
             pygame.display.update()
 
     def show_end_screen(self):
@@ -128,13 +127,13 @@ g.show_start_screen()
 while g.running:
     g.new()
     g.playing =True
-    while g.playing:
-        g.clock.tick(fps)
-        #g.x = random.randint(0,539)
-        #print("printing rand value",self.x)
+    g.update_rand_x()
+    #print(g.rand_x)
+    while g.playing:       
         g.events()
         g.update()
         g.draw()
+    g.clock.tick(fps)
     g.show_end_screen()
 
 pygame.quit()

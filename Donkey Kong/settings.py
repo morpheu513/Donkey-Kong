@@ -16,8 +16,7 @@ font_name = 'freesansbold.ttf'
 button_width = 150
 button_height = 40
 
-bg = '..\\Donkey Kong\\Assets\\Background.png'
-kong_start_screen = '..\\Donkey Kong\\Assets\\Donkey\\Startscreen.png'
+
 
 #Mario images
 mario_anim = ['..\\Donkey Kong\\Assets\\Mario\\Untitled-1.png',
@@ -28,10 +27,10 @@ climb_path = ['..\\Donkey Kong\\Assets\\Mario\\Climb-1.png',
               '..\\Donkey Kong\\Assets\\Mario\\Climb-2.png']
 
 #Donkey images
-donkey_path = ['..\\Donkey Kong\\Assets\\Donkey\\without barrel.png',
-               '..\\Donkey Kong\\Assets\\Donkey\\with barrel.png',
-               '..\\Donkey Kong\\Assets\\Donkey\\left_pick.png',
-               '..\\Donkey Kong\\Assets\\Donkey\\right_pick.png']
+donkey_path = '..\\Donkey Kong\\Assets\\Donkey\\without barrel.png'
+               #'..\\Donkey Kong\\Assets\\Donkey\\with barrel.png',
+               #'..\\Donkey Kong\\Assets\\Donkey\\left_pick.png',
+               #'..\\Donkey Kong\\Assets\\Donkey\\right_pick.png']
 
 #Barrel images
 barrel_path = ['..\\Donkey Kong\\Assets\\Donkey\\barrel.png',
