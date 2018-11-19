@@ -16,7 +16,8 @@ font_name = 'freesansbold.ttf'
 button_width = 150
 button_height = 40
 
-
+bg = '..\\Donkey Kong\\Assets\\Background.png'
+kong_start_screen = '..\\Donkey Kong\\Assets\\Donkey\\Startscreen.png'
 
 #Mario images
 mario_anim = ['..\\Donkey Kong\\Assets\\Mario\\Untitled-1.png',

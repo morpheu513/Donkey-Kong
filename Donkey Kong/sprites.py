@@ -119,9 +119,10 @@ class Donkey(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(display_width/2,display_height-486)
         self.vel = pygame.math.Vector2(0,0)
         self.acc = pygame.math.Vector2(0,0)
+        self.x = random.randint(155,539)
     def update(self):
         #acc = [-acceleration,+acceleration]
-        #x = random.randint(0,539)
+        #x = random.randint(155,539)
         if self.image == donkey_list[0]:
             self.acc.x = -acceleration
             if self.rect.left < 155.5:
@@ -130,10 +131,22 @@ class Donkey(pygame.sprite.Sprite):
 ##                time.sleep(2)
                 self.image = donkey_list[1]
         else:
-            self.acc.x = ((self.game.x-self.rect.x)/(abs(self.game.x-self.rect.x)+1))*acceleration
-            if self.acc.x == 0:
+            #self.acc.x = ((x-self.rect.x)/(abs(x-self.rect.x)+1))*acceleration
+            #if self.acc.x == 0:
                 #self.throw()
-                print("Hey")
+                #print("Hey")
+                if self.x != self.pos.x:
+                    if self.x > self.pos.x:
+                        self.acc.x = acceleration
+                    elif self.x < self.pos.x:
+                        self.acc.x = -acceleration
+                else:
+                    self.acc.x = 0
+                    #print('hey')
+                    self.x =random.randint(155,539)
+
+                #if self.acc.x == 0:
+                    #self.x =random.randint(155,539)
 
         self.acc.x += self.vel.x * (friction)
         self.vel += self.acc

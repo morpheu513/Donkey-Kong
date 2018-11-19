@@ -95,21 +95,27 @@ class game:
                 if event.type == pygame.QUIT:
                     waiting = False
                     self.running = False
-                if event.type == pygame.KEYDOWN:
-                    waiting = False
+
             self.display.fill(black)
-            self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
+            #self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
+            bcg = pygame.image.load(bg)
+            self.display.blit(bcg,(0,0))
+            kong = pygame.image.load(kong_start_screen)
+            self.display.blit(kong,(180,320))
+            self.drawtxt('Press START to begin', 30, white ,320, 560)
 
             mouse = pygame.mouse.get_pos()
             mouse_click = pygame.mouse.get_pressed()
-            if (245+button_width) > mouse[0] > 245 and (550+button_height) > mouse[1] > 550:
-                pygame.draw.rect(self.display , grey ,(245,550,button_width,button_height))
+            if (245+button_width) > mouse[0] > 245 and (600+button_height) > mouse[1] > 600:
+                pygame.draw.rect(self.display , black ,(245,600,button_width,button_height))
+                self.drawtxt('START', 35 , grey,320 , 620)
                 if mouse_click[0] == 1:
                     waiting = False
             else:
-                pygame.draw.rect(self.display , white ,(245,550,button_width,button_height))
+                pygame.draw.rect(self.display , black ,(245,600,button_width,button_height))
+                self.drawtxt('START', 35 , white,320 , 620)
 
-            self.drawtxt('START', 20 , black,320 , 570)
+
             pygame.display.update()
 
     def show_end_screen(self):
@@ -124,7 +130,7 @@ while g.running:
     g.playing =True
     while g.playing:
         g.clock.tick(fps)
-        g.x = random.randint(0,539)
+        #g.x = random.randint(0,539)
         #print("printing rand value",self.x)
         g.events()
         g.update()
