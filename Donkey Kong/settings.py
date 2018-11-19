@@ -12,6 +12,10 @@ font_name = 'freesansbold.ttf'
 ##for roots,dirs,files in os.walk('E:\\'):
 ##    if 'Donkey Kong' in dirs:
 ##        f_path = os.path.split(os.path.abspath(dirs[dirs.index('Donkey Kong')]))[0]
+#button sizes
+button_width = 150
+button_height = 40
+
 
 
 #Mario images
@@ -56,7 +60,7 @@ mesh = ['..\\Donkey Kong\\Assets\\Platforms\\mesh.png']
 plats = [(0,display_height-19),
      (3.5,display_height-140),
      (5,display_height-244),
-     (192,display_height-244),
+     (180,display_height-244),
      (494,display_height-244),
      (0,display_height-375),
          (3.5,display_height-486),

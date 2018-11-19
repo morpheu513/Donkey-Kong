@@ -11,7 +11,7 @@ class game:
         pygame.display.set_caption("Donkey Kong")
         self.clock = pygame.time.Clock()
         self.running = True
-        self.playing = False
+        self.playing = True
 
     '''def run(self):
         self.playing =True
@@ -87,7 +87,7 @@ class game:
         text_rect.center = (x,y)
         self.display.blit(text_surf,text_rect)
 
-    def wait(self):
+    def show_start_screen(self):
         waiting = True
         while waiting:
             self.clock.tick(fps)
@@ -97,13 +97,21 @@ class game:
                     self.running = False
                 if event.type == pygame.KEYDOWN:
                     waiting = False
+            self.display.fill(black)
+            self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
 
+            mouse = pygame.mouse.get_pos()
+            mouse_click = pygame.mouse.get_pressed()
+            if (245+button_width) > mouse[0] > 245 and (550+button_height) > mouse[1] > 550:
+                pygame.draw.rect(self.display , grey ,(245,550,button_width,button_height))
+                if mouse_click[0] == 1:
+                    waiting = False
+            else:
+                pygame.draw.rect(self.display , white ,(245,550,button_width,button_height))
 
-    def show_start_screen(self):
-        self.display.fill(black)
-        self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
-        pygame.display.update()
-        self.wait()
+            self.drawtxt('START', 20 , black,320 , 570)
+            pygame.display.update()
+
     def show_end_screen(self):
         pass
 
