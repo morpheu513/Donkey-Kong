@@ -7,7 +7,7 @@ mario_images = [pygame.image.load(i) for i in mario_anim]
 plat_list = [pygame.image.load(i) for i in plat_path]
 climb_list = [pygame.image.load(i) for i in climb_path]
 ladder = pygame.image.load('..\\Donkey Kong\\Assets\\Platforms\\ladder.png')
-donkey_img = pygame.image.load(donkey_path)
+donkey_list = [pygame.image.load(i) for i in donkey_path]
 barrel_pile = pygame.image.load('..\\Donkey Kong\\Assets\\Donkey\\barrel_pile.png')
 barrel_list = [pygame.image.load(i) for i in barrel_path]
 #player class
@@ -112,37 +112,39 @@ class Donkey(pygame.sprite.Sprite):
     def __init__(self,game):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
-        self.image = donkey_img
+        self.image = donkey_list[0]
         self.rect = self.image.get_rect()
         self.rect.x = display_width/2 - 50
         self.rect.bottom = display_height-486
         self.pos = pygame.math.Vector2(display_width/2,display_height-486)
         self.vel = pygame.math.Vector2(0,0)
-        self.acc = pygame.math.Vector2(0,0)
+        self.acc = pygame.math.Vector2(-acceleration,0)
     def update(self):
-        if self.game.barrel.pos == vector([-200,-200]):
+        if self.image == donkey_list[0]:
             print("I do not have barrel")
             self.acc.x = -acceleration
             if self.rect.left < 155.5:
-                print("Got one!")
-                self.acc.x = 0
-                self.game.barrel.pos = vector([self.game.donkey.rect.x+51,self.game.donkey.rect.y+61]) #after picking up the barrel the barrel is put into the screen on the Donkey's Hand
+                    print("Got one!")
+                    self.acc.x = 0
+                    self.image = donkey_list[1]
+                    #self.game.barrel.pos = vector([self.game.donkey.rect.x+51,self.game.donkey.rect.y+61]) #after picking up the barrel the barrel is put into the screen on the Donkey's Hand
         else:
-            self.acc.x = ((self.game.rand_x-self.rect.x)/(abs(self.game.rand_x-self.rect.x)+1))*acceleration/5
-            self.game.barrel.pos = [self.game.donkey.rect.x+51,self.game.donkey.rect.y+61] #barrel stays on the Donkey's Hand while the Donkey is moving
+            self.acc.x = ((self.game.rand_x-self.rect.x)/(abs(self.game.rand_x-self.rect.x)+1))*acceleration/3
+            #self.game.barrel.pos = [self.game.donkey.rect.x+51,self.game.donkey.rect.y+61] #barrel stays on the Donkey's Hand while the Donkey is moving
             if self.acc.x == 0:
-                self.throw()
+                self.throw(tuple(self.pos))
                 self.game.x = self.game.update_rand_x()
 
         self.acc.x += self.vel.x * (friction)
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.midbottom  = self.pos
-    def throw(self):
+    def throw(self,pos):
         print("Chucked it hard!")
-        self.acc.x = 0
-        self.game.barrel.acc.y = acceleration*10
-        if self.game.barrel.rect.center[1]> display_height+13:
+        self.image = donkey_list[0]
+        self.game.barrel.pos = vector(pos)
+        self.game.barrel.acc.y = acceleration
+        if self.game.barrel.rect.center> (0,display_height+13):
             self.game.barrel.pos = vector([-200,-200])
 
 #class to create barrel
@@ -161,7 +163,6 @@ class Barrel(pygame.sprite.Sprite):
         self.rect.center = self.pos
     def update(self):
         #self.co_ords = [self.game.donkey.rect.x+51,self.game.donkey.rect.y+61]
-        self.acc.x += self.vel.x * (friction)
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
         self.rect.center = self.pos
