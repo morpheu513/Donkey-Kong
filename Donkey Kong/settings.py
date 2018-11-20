@@ -18,6 +18,7 @@ button_height = 40
 
 bg = '..\\Donkey Kong\\Assets\\Background.png'
 kong_start_screen = '..\\Donkey Kong\\Assets\\Donkey\\Startscreen.png'
+kong_end_screen = '..\\Donkey Kong\\Assets\\Donkey\\Endscreen.png'
 
 #Mario images
 mario_anim = ['..\\Donkey Kong\\Assets\\Mario\\Untitled-1.png',
@@ -73,3 +74,4 @@ red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
 grey = (155,155,155)
+light_red = (155,0,0)
