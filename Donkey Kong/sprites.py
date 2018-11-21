@@ -18,12 +18,14 @@ class Player(pygame.sprite.Sprite):
         self.images = [pygame.image.load(i) for i in mario_anim]
         self.image_index = 0
         self.image = self.images[self.image_index]
-        #self.image.fill(red)
+
         self.rect = self.image.get_rect()
         self.rect.center = (22,display_height-40)
         self.pos = pygame.math.Vector2(22,display_height-40)
         self.vel = pygame.math.Vector2(0,0)
         self.acc = pygame.math.Vector2(0,0)
+
+
 #function to make the player jump
     def jump(self):
         self.rect.y += 1
@@ -34,7 +36,6 @@ class Player(pygame.sprite.Sprite):
 
 #climbing the ladder
     def climb(self,check):
-       # self.acc.y = 0
         count = 0
         if check == 'up':
             if count<fps//8:
@@ -51,9 +52,17 @@ class Player(pygame.sprite.Sprite):
             else:
                 count = 0
 
+#player death
     def die(self):
         self.game.playing = False
         self.game.running = False
+
+#when the player wins
+    def win(self):
+
+        self.game.win_end_screen()
+        self.game.playing = False
+        
 
 #updating the co-ordinates of the player
     def update(self):
@@ -86,7 +95,8 @@ class Player(pygame.sprite.Sprite):
         bcollide = pygame.sprite.spritecollideany(self,self.game.barrels,False)
         if bcollide:
             self.die()
-
+        if self.pos.y < display_height - 485:
+            self.win()
 
         self.acc.x += self.vel.x * (friction)
         self.vel += self.acc
@@ -129,22 +139,19 @@ class Donkey(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(display_width/2,display_height-486)
         self.vel = pygame.math.Vector2(0,0)
         self.acc = pygame.math.Vector2(0,0)
-        #self.x = random.randint(155,539)
+
+#updatiing the position of kong
     def update(self):
-        #acc = [-acceleration,+acceleration]
-        #x = random.randint(155,539)
+
         if self.image == donkey_list[0]:
             self.acc.x = -acceleration
             if self.rect.left < 155.5:
                 self.acc.x = 0
-                print("Got one!")
-##                self.image = donkey_list[2]
-##                time.sleep(2)
                 self.image = donkey_list[1]
         else:
             self.acc.x = ((self.game.rand_x-self.rect.x)/(abs(self.game.rand_x-self.rect.x)+1))*acceleration/1.5
             if self.acc.x == 0:
-                print("Chucked!")
+
                 self.throw(tuple(self.pos))
                 self.image = donkey_list[0]
                 self.game.update_rand_x()
@@ -156,23 +163,22 @@ class Donkey(pygame.sprite.Sprite):
         self.rect.midbottom  = self.pos
 
     def throw(self,pos):
-        print("Chucked it hard!")
+
         self.image = donkey_list[0]
         self.game.barrel.pos = vector(pos)
         self.game.barrel.vel.y = 7
-    #    if self.game.barrel.rect.center> (0,display_height+13):
-    #        self.game.barrel.pos = vector([-200,-200])
+
 
 #class to create barrel
 class Barrel(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        #self.game = game
+
         self.image_index = 0
 
         self.image = barrel_list[0]
         self.rect = self.image.get_rect()
-        #self.co_ords = [-200,-200]       #initially the barrel is placed outside the display
+
 
         self.pos = pygame.math.Vector2(-200,-200)
         self.vel = pygame.math.Vector2(0,0)

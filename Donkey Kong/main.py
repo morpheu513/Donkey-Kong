@@ -1,4 +1,3 @@
-import pygame
 from random import *
 from settings import *
 from sprites import *
@@ -12,18 +11,10 @@ class game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.playing = True
+        self.flag = True
 
-    '''def run(self):
-        self.playing =True
-        while self.playing:
-            self.clock.tick(fps)
-            self.x = random.randint(0,539)
-            #print("printing rand value",self.x)
-            self.events()
-            self.update()
-            self.draw()'''
 
-#making a new player and setting platforms
+#making a new player and setting up the sprites
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
@@ -44,16 +35,18 @@ class game:
         self.all_sprites.add(self.donkey)
         self.barrels.add(self.barrel)
         self.all_sprites.add(self.barrel)
-    #    self.run()
+
 
 #updating the position of the sprites
     def update(self):
         self.all_sprites.update()
         collision = pygame.sprite.spritecollideany(self.player, self.platforms , False)
         if collision:
-##            if collision.rect.top >= self.player.rect.bottom:
+
             self.player.pos.y = collision.rect.top + 1
             self.player.vel.y = 0
+
+
 #drawing objects onto the screen
     def draw(self):
         self.display.fill(black)
@@ -67,25 +60,16 @@ class game:
             if event.type == pygame.QUIT:
                 if self.playing:
                     self.playing = False
+                    pygame.quit()
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     self.player.jump()
-##            collision = pygame.sprite.spritecollideany(self.player,self.ladders,False)
-##            if collision:
-##                self.player.acc = vector(0,0)
-##                if event.type == pygame.KEYDOWN:
-##                    if event.key == pygame.K_UP:
-##                        self.player.climb('up')
-##                    if event.key == pygame.K_DOWN:
-##                        self.player.climb('down')
-##            else:
-##                self.player.acc = vector(0,gravity)
-            #self.acc = vector(0, gravity)
 
     def update_rand_x(self):
-        self.rand_x = randrange(0,539,100)
+        self.rand_x = randrange(0,589,100)
 
+#functionn to draw text onto the screen
     def drawtxt(self,text,fsize,color,x,y):
         font = pygame.font.Font(font_name,fsize)
         text_surf = font.render(text,True,color)
@@ -93,6 +77,8 @@ class game:
         text_rect.center = (x,y)
         self.display.blit(text_surf,text_rect)
 
+
+#the start screen of the game
     def show_start_screen(self):
         waiting = True
         while waiting:
@@ -103,7 +89,7 @@ class game:
                     self.running = False
 
             self.display.fill(black)
-            #self.drawtxt("Donkey Kong" , 80 , grey, 319 , 100)
+
             bcg = pygame.image.load(bg)
             self.display.blit(bcg,(0,0))
             kong = pygame.image.load(kong_start_screen)
@@ -124,6 +110,8 @@ class game:
 
             pygame.display.update()
 
+
+#shows the end screen after the player dies
     def show_end_screen(self):
         waiting  = True
         while waiting:
@@ -131,41 +119,79 @@ class game:
             self.display.fill(black)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    waiting = False
+                    pygame.quit()
+
+
 
 
             kong = pygame.image.load(kong_end_screen)
-            self.display.blit(kong,(320,50))
+            self.display.blit(kong,(200,120))
             self.drawtxt('Game Over', 40, white ,320, 560)
             mouse = pygame.mouse.get_pos()
             mouse_click = pygame.mouse.get_pressed()
             if (245+button_width) > mouse[0] > 245 and (600+button_height) > mouse[1] > 600:
                 pygame.draw.rect(self.display , light_red ,(245,600,button_width,button_height))
-                self.drawtxt('QUIT', 35 , black,320 , 620)
+                self.drawtxt('QUIT', 35 , black,320 , 625)
                 if mouse_click[0] ==1:
                     waiting = False
+                    self.running = False
             else:
                 pygame.draw.rect(self.display ,red ,(245,600,button_width,button_height))
-                self.drawtxt('QUIT', 35 , black,320 , 620)
+                self.drawtxt('QUIT', 35 , black,320 , 625)
 
             pygame.display.update()
+
+
+    def win_end_screen(self):
+        waiting  = True
+        while waiting:
+            self.clock.tick(fps)
+            self.display.fill(black)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    waiting = False
+                    pygame.quit()
+
+
+
+
+            kong = pygame.image.load(kong_end_screen)
+            self.display.blit(kong,(200,120))
+            self.drawtxt('You Win', 40, white ,320, 560)
+            mouse = pygame.mouse.get_pos()
+            mouse_click = pygame.mouse.get_pressed()
+            if (245+button_width) > mouse[0] > 245 and (600+button_height) > mouse[1] > 600:
+                pygame.draw.rect(self.display , light_red ,(245,600,button_width,button_height))
+                self.drawtxt('QUIT', 35 , black,320 , 625)
+                if mouse_click[0] ==1:
+                    waiting = False
+                    self.running = False
+                    self.flag = False
+            else:
+                pygame.draw.rect(self.display ,red ,(245,600,button_width,button_height))
+                self.drawtxt('QUIT', 35 , black,320 , 625)
+
+            pygame.display.update()
+
+
+
 
 
 g = game()
 g.show_start_screen()
 
-#game loop
+#main game loop
 while g.running:
     g.new()
     g.playing =True
     g.update_rand_x()
     while g.playing:
         g.clock.tick(fps)
-        #g.x = random.randint(0,539)
-        #print("printing rand value",self.x)
+
         g.events()
         g.update()
         g.draw()
-    g.show_end_screen()
+        if g.flag == True and g.playing == False :
+            g.show_end_screen()
 
 pygame.quit()

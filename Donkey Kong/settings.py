@@ -1,4 +1,3 @@
-##import os
 #basic game settings
 display_width = 639
 display_height = 700
@@ -8,16 +7,14 @@ friction = -0.12
 gravity = 0.6
 jump_vel = 7
 font_name = 'freesansbold.ttf'
-#generallizing path
-##for roots,dirs,files in os.walk('E:\\'):
-##    if 'Donkey Kong' in dirs:
-##        f_path = os.path.split(os.path.abspath(dirs[dirs.index('Donkey Kong')]))[0]
 #button sizes
 button_width = 150
 button_height = 40
-
+#start screen images
 bg = '..\\Donkey Kong\\Assets\\Background.png'
 kong_start_screen = '..\\Donkey Kong\\Assets\\Donkey\\Startscreen.png'
+
+#end screen images
 kong_end_screen = '..\\Donkey Kong\\Assets\\Donkey\\Endscreen.png'
 
 #Mario images
